@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import ListItem from './components/ListItem/ListItem';
+
 
 function App() {
+  /*   let data
+    async function get() {
+      await fetch("https://kitsu.io/api/edge/anime?filter[text]=code geass", {
+        headers: {
+          "Accept": "application/vnd.api+json",
+          "Content-Type": "application/vnd.api+json"
+        },
+      })
+        .then(response => response.json())
+        .then(result => data = result)
+      console.log(data.data[0].attributes.posterImage.original);
+    }
+  
+    get() */
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='wrapper'>
+      < ListItem />
     </div>
   );
 }
