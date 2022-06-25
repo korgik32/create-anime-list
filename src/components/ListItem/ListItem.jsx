@@ -9,6 +9,10 @@ function ListItem() {
     useEffect(() => {
         loadStorage(0);
     }, [])
+    //автодобавление в хранилище при изменении списка
+    useEffect(() => {
+        animeList.length && addInStorage(0, JSON.stringify(animeList))
+    }, [animeList])
     const addInStorage = (key, value) => {
         localStorage.setItem(0, value);
     }
@@ -18,7 +22,7 @@ function ListItem() {
     const loadStorage = (key) => {
         let data = localStorage.getItem("0");
         data = JSON.parse(data)
-        setAnimeList(data)
+        data && setAnimeList(data)
     }
     const onSearch = (event) => {
         if (event.target.className == s.item__search) {
@@ -40,9 +44,14 @@ function ListItem() {
             event.target.style.backgroundSize = "30%";
         }
     }
+    const animeListCompare = (anime) => {
+        return animeList.find(elem =>
+            anime.title === elem.title
+        )
+    }
     return (
         <Context.Provider value={{
-            setAnimeList, animeList,
+            setAnimeList, animeList, animeListCompare,
             addInStorage, deleteFromStorage
         }}>
             <section className={s.list__item}>

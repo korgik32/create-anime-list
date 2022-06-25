@@ -6,8 +6,6 @@ function Search() {
     const context = useContext(Context)
     const addAnime = (anime) => {
         context.setAnimeList((prev) => [...prev, anime])
-        context.addInStorage(0, JSON.stringify(context.animeList))
-
     }
     return (
         <section className={s.search}>
