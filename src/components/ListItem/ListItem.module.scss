@@ -15,9 +15,13 @@
   
 }
 .item__field {
+    display: flex;
     flex:0 1 80%;
     background: rgb(211, 156, 156);
     border: 2px solid black;
+    max-height: 100%;
+    box-sizing: border-box;
+    flex-wrap:wrap;
 }
 .item__search {
     position: relative;
@@ -31,5 +35,4 @@
     background-repeat:no-repeat; 
     background-size: 30%;
     background-position: center;
-
 }

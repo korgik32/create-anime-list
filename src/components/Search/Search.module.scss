@@ -2,6 +2,7 @@
     position: absolute;
     height: 250%;
     width: 300%;
+    max-height: 254px;
     background: rgb(238, 235, 235);
     transform: translateX(-100%);
     border: solid 2px black;
@@ -54,6 +55,7 @@
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        text-align: center;
     }
 }
 

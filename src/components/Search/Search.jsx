@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import Context from "../../Context";
 import s from "./Search.module.scss"
 
 function Search() {
+    const context = useContext(Context)
+    const addAnime = (anime) => {
+        context.setAnimeList((prev) => [...prev, anime])
+        context.addInStorage(0, JSON.stringify(context.animeList))
+
+    }
     return (
         <section className={s.search}>
             <div className={s.search__string} type="text" placeholder="Search...">
@@ -14,12 +21,18 @@ function Search() {
                         <p>cowboy</p>
                         <img src="https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/b9215827-6d1e-4418-ac0a-fa892a651b0c/orig" alt="anime image" />
                     </div>
-
                 </div>
                 <div className={s.ok}>
                     <img
                         src="/img/Search/ok.svg"
                         alt="ok"
+                        onClick={() => {
+                            addAnime(
+                                {
+                                    title: "cowboy",
+                                    poster: "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/b9215827-6d1e-4418-ac0a-fa892a651b0c/orig"
+                                })
+                        }}
                         onMouseOver={(event) => { event.target.src = "/img/Search/ok-hover.svg" }}
                         onMouseOut={(event) => { event.target.src = "/img/Search/ok.svg" }}
                     />
