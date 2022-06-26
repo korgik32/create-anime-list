@@ -11,16 +11,14 @@ function ListItem() {
     }, [])
     //автодобавление в хранилище при изменении списка
     useEffect(() => {
-        animeList.length && addInStorage(0, JSON.stringify(animeList))
+        animeList.length && updateStorage(0, animeList)
     }, [animeList])
-    const addInStorage = (key, value) => {
-        localStorage.setItem(0, value);
+    const updateStorage = (key, value) => {
+        localStorage.setItem(key, JSON.stringify(value));
     }
-    const deleteFromStorage = (key) => {
-        localStorage.removeItem(key);
-    }
+
     const loadStorage = (key) => {
-        let data = localStorage.getItem("0");
+        let data = localStorage.getItem(key);
         data = JSON.parse(data)
         data && setAnimeList(data)
     }
@@ -49,10 +47,13 @@ function ListItem() {
             anime.title === elem.title
         )
     }
+    //функция которая убирает кнопку удаления аниме в <Animes/>
+
+
     return (
         <Context.Provider value={{
             setAnimeList, animeList, animeListCompare,
-            addInStorage, deleteFromStorage
+            updateStorage,
         }}>
             <section className={s.list__item}>
                 <input className={s.item__rank} placeholder="rank"></input>

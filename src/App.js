@@ -4,9 +4,10 @@ import ListItem from './components/ListItem/ListItem';
 
 
 function App() {
-
+  const clickWatcher = (event) => {
+  }
   return (
-    <div className='wrapper'>
+    <div onClick={clickWatcher} className='wrapper'>
       < ListItem />
     </div>
   );
