@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Search from "../Search/Search";
+import React, { useEffect, useState, createContext } from "react";
+import Search from "./Search/Search";
 import s from "./ListItem.module.scss";
-import Context from "../../Context";
 import Anime from "./Anime/Anime";
+
+export const Context = createContext();
+
 function ListItem() {
     const [searchState, setSeacthState] = useState(false)
     const [animeList, setAnimeList] = useState([])

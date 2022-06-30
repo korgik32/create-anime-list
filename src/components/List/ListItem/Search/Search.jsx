@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import Context from "../../Context";
+import { Context } from "../ListItem";
 import s from "./Search.module.scss"
 
 function Search() {
     const context = useContext(Context)
     const addAnime = (anime) => {
-        context.setAnimeList((prev) => [...prev, anime])
+        if (context.animeListCompare(anime))
+            alert("Вы уже добавили это аниме")
+        else
+            context.setAnimeList((prev) => [...prev, anime])
     }
     return (
         <section className={s.search}>

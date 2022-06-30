@@ -1,0 +1,16 @@
+.header{
+    display: flex;
+    align-items: center;
+    min-height: 100px;
+    background: #b5e4f6;
+    border-radius: 10px;
+    margin-bottom: 15px;
+ 
+}
+
+.header__title{
+    font-family: 'Courgette', cursive;
+    
+    font-size: 30px;
+    color: rgb(46, 109, 109);
+}

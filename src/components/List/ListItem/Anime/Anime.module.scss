@@ -1,23 +1,25 @@
 .anime{
     position: relative;
    /*  width: 10%; */
-    img{
+   .anime__poster{
         display: block;
        
         width: 100%;
         
         max-height: 100px;
     }
+
 }
 
 .anime__close{
+    display: block;
     position: absolute;
     top: 0;
     right: 0;
 
 height: 0%;
 width: 0%;
-background: rgb(255, 37, 37);
+
 transition: 0.1s ease-in-out;
 
 }

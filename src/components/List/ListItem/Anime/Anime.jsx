@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import Context from "../../../Context";
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "../ListItem";
 import s from "./Anime.module.scss"
 
 function Anime({ poster, self }) {
@@ -11,11 +11,12 @@ function Anime({ poster, self }) {
         AnimeElement.previousSibling.style.width = "0%";
         AnimeElement = null;
         event.currentTarget.removeEventListener("click", handler, true)
+
     }
     const onAnime = (event) => {
         const target = event.currentTarget.firstChild;
         target.style.height = "30%";
-        target.style.width = "50%";
+        target.style.width = "45%";
         const clickWatcher = document;
         clickWatcher.addEventListener("click", handler, true)
         clickWatcher.current = event.target;
@@ -30,8 +31,8 @@ function Anime({ poster, self }) {
 
     return (
         <section onClick={onAnime} className={s.anime}>
-            <div onClick={onDelete} className={s.anime__close}></div>
-            <img src={poster} alt="image" />
+            <img onClick={onDelete} className={s.anime__close} src={"/img/ListItem/anime-delete.svg"} alt="delete"></img>
+            <img className={s.anime__poster} src={poster} alt="image" />
         </section>
     )
 }

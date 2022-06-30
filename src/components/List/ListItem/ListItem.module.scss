@@ -5,11 +5,10 @@
 }
 .item__rank {
     flex:0 1 10%;
-    background: rgb(238, 235, 235);
-    border-radius: 8px 0px 0px 8px;
-    border-color: black;
+    background: rgb(249, 252, 255);
     font-size: 30px;
-    border-right: 0px;
+    border: 1px solid black;
+    border-right:0 ;
     overflow: hidden;
     text-align: center;
   
@@ -17,19 +16,19 @@
 .item__field {
     display: flex;
     flex:0 1 80%;
-    background: rgb(211, 156, 156);
-    border: 2px solid black;
+    background: rgb(249, 252, 255);
+    border: 1px solid black;
     max-height: 100%;
     box-sizing: border-box;
     flex-wrap:wrap;
 }
 .item__search {
     position: relative;
-    background: rgb(238, 235, 235);
+    background:rgb(249, 252, 255);
     flex:0 1 10%;
     /* background-color: rgb(199, 145, 145); */
-    border-radius: 0px 8px 8px 0px ;
-    border: 2px inset black;
+
+    border: 1px inset black;
     border-left: 0px;  
     background-image:url(/../public/img/Search/open.svg);
     background-repeat:no-repeat; 
