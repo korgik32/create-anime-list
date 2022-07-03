@@ -1,7 +1,12 @@
 .list__item {
+    position:relative;
     display: flex;
     min-height: 100px;
     input {outline:none;}
+    &:hover .list__delete{
+        visibility:visible; 
+    }
+
 }
 .item__rank {
     flex:0 1 10%;
@@ -11,6 +16,7 @@
     border-right:0 ;
     overflow: hidden;
     text-align: center;
+
   
 }
 .item__field {
@@ -21,6 +27,7 @@
     max-height: 100%;
     box-sizing: border-box;
     flex-wrap:wrap;
+
 }
 .item__search {
     position: relative;
@@ -34,4 +41,18 @@
     background-repeat:no-repeat; 
     background-size: 30%;
     background-position: center;
+
+}
+.list__delete{
+    visibility:hidden;  
+    position: absolute;
+    right: 0;
+    width: 25px;
+    height: 25px;
+/*     background: rgb(212, 92, 92); */
+    z-index: 1;
+    img{
+        margin: -1px -1px 0px 0px;
+        cursor: pointer;
+    }
 }

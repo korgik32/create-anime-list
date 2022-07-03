@@ -26,12 +26,12 @@ function Anime({ poster, self }) {
         context.setAnimeList(data = context.animeList.filter(elem =>
             elem.title !== self.title
         ))
-        context.updateStorage(0, data)
+        context.updateStorage(context.id, data)
     }
 
     return (
         <section onClick={onAnime} className={s.anime}>
-            <img onClick={onDelete} className={s.anime__close} src={"/img/ListItem/anime-delete.svg"} alt="delete"></img>
+            <img onClick={onDelete} className={s.anime__close} src={"/img/ListItem/animeDelete.svg"} alt="delete"></img>
             <img className={s.anime__poster} src={poster} alt="image" />
         </section>
     )

@@ -1,19 +1,22 @@
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import Search from "./Search/Search";
 import s from "./ListItem.module.scss";
 import Anime from "./Anime/Anime";
+import { ListContext } from "../List";
+
 
 export const Context = createContext();
 
-function ListItem() {
+function ListItem({ id }) {
     const [searchState, setSeacthState] = useState(false)
     const [animeList, setAnimeList] = useState([])
+    const context = useContext(ListContext)
     useEffect(() => {
-        loadStorage(0);
+        loadStorage(id);
     }, [])
     //автодобавление в хранилище при изменении списка
     useEffect(() => {
-        animeList.length && updateStorage(0, animeList)
+        animeList.length && updateStorage(id, animeList)
     }, [animeList])
     const updateStorage = (key, value) => {
         localStorage.setItem(key, JSON.stringify(value));
@@ -49,15 +52,27 @@ function ListItem() {
             anime.title === elem.title
         )
     }
-    //функция которая убирает кнопку удаления аниме в <Animes/>
+    const deleteAnimeList = () => {
+        if (window.confirm("Удалить полоску?")) {
+            setAnimeList([])
+            localStorage.removeItem(id)
+            context.setListCount(context.listCount.filter((elem) =>
+                elem !== id
+            ))
+        }
+
+    }
 
 
     return (
         <Context.Provider value={{
             setAnimeList, animeList, animeListCompare,
-            updateStorage,
+            updateStorage, id
         }}>
             <section className={s.list__item}>
+                <div className={s.list__delete} onClick={deleteAnimeList}>
+                    <img src="/img/ListItem/animeList-delete.svg" alt="delete" />
+                </div>
                 <input className={s.item__rank} placeholder="rank"></input>
                 <div className={s.item__field}>
                     {animeList?.map((elem, index) =>
