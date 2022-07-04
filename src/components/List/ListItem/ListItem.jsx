@@ -54,13 +54,14 @@ function ListItem({ id }) {
     }
     const deleteAnimeList = () => {
         if (window.confirm("Удалить полоску?")) {
+            let keysArray = [];
             setAnimeList([])
             localStorage.removeItem(id)
-            context.setListCount(context.listCount.filter((elem) =>
+            keysArray = context.listCount.filter((elem) =>
                 elem !== id
-            ))
+            )
+            context.setListCount(keysArray.sort(context.compare))
         }
-
     }
 
 
