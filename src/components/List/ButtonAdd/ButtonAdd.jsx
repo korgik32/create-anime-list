@@ -11,7 +11,7 @@ function ButtonAdd() {
             keysArray.push(localStorage.key(index));
         }
         maxKey = Math.max(...keysArray);
-        localStorage.setItem(maxKey !== -Infinity ? maxKey + 1 : 0, JSON.stringify([]))
+        localStorage.setItem(maxKey !== -Infinity ? Number(maxKey + 1) : 0, JSON.stringify([]))
     }
     return (
         <div onClick={onButtonAdd} className={s.button}>

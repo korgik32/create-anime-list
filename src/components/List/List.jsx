@@ -4,7 +4,7 @@ import ButtonAdd from "./ButtonAdd/ButtonAdd";
 import ButtonDownload from "./ButtonDownload/ButtonDownload";
 import s from "./List.module.scss";
 import ListItem from "./ListItem/ListItem"
-
+import { ranksArray, colorsArray } from "../../dataArrays"
 export const ListContext = createContext()
 
 function List() {
@@ -29,7 +29,7 @@ function List() {
         <ListContext.Provider value={{ listCount, setListCount, compare }}>
             <main className={s.main}>
                 {listCount.map((elem, index) =>
-                    <ListItem key={index} id={elem} />
+                    <ListItem key={index} id={elem} placeholder={ranksArray[index]} color={colorsArray[index]} />
                 )
                 }
                 <div className={s.buttons}>

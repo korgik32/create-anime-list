@@ -9,7 +9,7 @@
 }
 .linksList{
 
-    margin: 0px 25% 0px 5%;
+    margin: 0px 50% 0px 5%;
     li{
         list-style-type: none; 
         text-align: left;
@@ -26,14 +26,14 @@
 .image{
     flex:1;
     img{
-        width: 40%;
+        width: 60%;
     }
 }
 @media(max-width: 862px) {
     .image{
     
         img{
-            width: 60%;
+            width: 80%;
         }
     }
 }

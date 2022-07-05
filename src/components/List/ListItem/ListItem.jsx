@@ -7,25 +7,30 @@ import { ListContext } from "../List";
 
 export const Context = createContext();
 
-function ListItem({ id }) {
+function ListItem({ id, placeholder, color }) {
     const [searchState, setSeacthState] = useState(false)
     const [animeList, setAnimeList] = useState([])
+    const [rankValue, setRankValue] = useState("")
     const context = useContext(ListContext)
     useEffect(() => {
         loadStorage(id);
     }, [])
     //автодобавление в хранилище при изменении списка
     useEffect(() => {
-        animeList.length && updateStorage(id, animeList)
+        animeList.length && updateStorage(id, { animeList, rankValue })
     }, [animeList])
+    useEffect(() => {
+        rankValue.length && updateStorage(id, { animeList, rankValue })
+
+    }, [rankValue])
     const updateStorage = (key, value) => {
         localStorage.setItem(key, JSON.stringify(value));
     }
-
     const loadStorage = (key) => {
         let data = localStorage.getItem(key);
         data = JSON.parse(data)
-        data && setAnimeList(data)
+        data && data.animeList && setAnimeList(data.animeList)
+        data && data.rankValue && setRankValue(data.rankValue)
     }
     const onSearch = (event) => {
         if (event.target.className == s.item__search) {
@@ -63,8 +68,6 @@ function ListItem({ id }) {
             context.setListCount(keysArray.sort(context.compare))
         }
     }
-
-
     return (
         <Context.Provider value={{
             setAnimeList, animeList, animeListCompare,
@@ -74,7 +77,12 @@ function ListItem({ id }) {
                 <div className={s.list__delete} onClick={deleteAnimeList}>
                     <img src="/img/ListItem/animeList-delete.svg" alt="delete" />
                 </div>
-                <input className={s.item__rank} placeholder="rank"></input>
+                <input className={s.item__rank}
+                    style={{ background: `${color}` }}
+                    value={rankValue}
+                    onChange={(event) => { setRankValue(event.target.value) }}
+                    placeholder={placeholder}>
+                </input>
                 <div className={s.item__field}>
                     {animeList?.map((elem, index) =>
                         <Anime

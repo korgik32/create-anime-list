@@ -31,7 +31,7 @@ function Search() {
                             addAnime(
                                 {
                                     title: "cowboy",
-                                    poster: "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/b9215827-6d1e-4418-ac0a-fa892a651b0c/orig"
+                                    poster: "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/b9215827-6d1e-4418-ac0a-fa892a651b0c/orig",
                                 })
                         }}
                         onMouseOver={(event) => { event.target.src = "/img/Search/ok-hover.svg" }}
