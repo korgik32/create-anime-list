@@ -6,12 +6,12 @@ function ButtonAdd() {
     const context = useContext(ListContext)
     const onButtonAdd = () => {
         let keysArray = [], maxKey;
-        context.setListCount((prev) => [...prev, true])
         for (let index = 0; index < localStorage.length; index++) {
             keysArray.push(localStorage.key(index));
         }
         maxKey = Math.max(...keysArray);
-        localStorage.setItem(maxKey !== -Infinity ? Number(maxKey + 1) : 0, JSON.stringify([]))
+        context.setListCount((prev) => [...prev, maxKey !== -Infinity ? Number(maxKey + 1) : 0])
+        localStorage.setItem(maxKey !== -Infinity ? Number(maxKey + 1) : 0, JSON.stringify([]));
     }
     return (
         <div onClick={onButtonAdd} className={s.button}>

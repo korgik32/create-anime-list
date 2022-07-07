@@ -12,9 +12,12 @@ function Search() {
     }
     return (
         <section className={s.search}>
-            <div className={s.search__string} type="text" placeholder="Search...">
-                <img src='/img/Search/search.svg' alt="search"></img>
-                <input placeholder="search..."></input>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
+                <div className={s.search__string} type="text" placeholder="Search...">
+                    <img src='/img/Search/search.svg' alt="search"></img>
+                    <input placeholder="search..."></input>
+                </div>
+                <img src="/img/Search/arrow.svg" className={s.close} alt="close" />
             </div>
             <div className={s.search__result}>
                 <div className={s.result__image}>

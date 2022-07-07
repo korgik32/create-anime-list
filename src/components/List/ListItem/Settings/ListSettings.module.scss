@@ -1,0 +1,52 @@
+.listSettings{
+    position: absolute;
+    height: 150%;
+    width: 250%;
+    max-height: 254px;
+    background: rgb(239, 250, 255);
+    transform: translateX(-100%);
+    padding: 10px 0px 0px 10px;
+    /* border-left: solid 0.5px rgb(180, 180, 180);
+    border-top: solid 0.5px rgb(180, 180, 180); */
+    border-radius: 13px 0px 13px 13px;
+    -webkit-box-shadow: 0px 5px 10px 3px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 5px 10px 3px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 5px 10px 3px rgba(34, 60, 80, 0.2);
+    z-index: 1;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.close{
+    display: block;
+    height: 40px;
+    transform: translate(-7px);
+    transition: 0.2s ease;
+    cursor: pointer;
+    &:hover{
+        transform: translate(-4px);
+    }
+}
+
+.colorPicker{
+    width: 35px;
+    height: 35px;
+    border:none;
+    background-color:transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+    
+     
+}
+
+.firstLine{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.colorPickerBlock{
+    display:flex;
+    align-items: center;
+}

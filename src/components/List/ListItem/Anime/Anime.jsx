@@ -26,7 +26,8 @@ function Anime({ poster, self }) {
         context.setAnimeList(data = context.animeList.filter(elem =>
             elem.title !== self.title
         ))
-        context.updateStorage(context.id, data)
+        const color = context.color, rankValue = context.rankValue;
+        context.updateStorage(context.id, { data, rankValue, color })
     }
 
     return (

@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-
 import ButtonAdd from "./ButtonAdd/ButtonAdd";
 import ButtonDownload from "./ButtonDownload/ButtonDownload";
 import s from "./List.module.scss";
@@ -28,10 +27,9 @@ function List() {
     return (
         <ListContext.Provider value={{ listCount, setListCount, compare }}>
             <main className={s.main}>
-                {listCount.map((elem, index) =>
-                    <ListItem key={index} id={elem} placeholder={ranksArray[index]} color={colorsArray[index]} />
-                )
-                }
+                {listCount.map((elem, index) => {
+                    return <ListItem key={Number(elem)} id={Number(elem)} placeholder={ranksArray[index]} defaultColor={colorsArray[index]} />
+                })}
                 <div className={s.buttons}>
                     <ButtonAdd className={s.button__add} />
                     <ButtonDownload className={s.button__download} />

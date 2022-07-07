@@ -3,26 +3,37 @@ import Search from "./Search/Search";
 import s from "./ListItem.module.scss";
 import Anime from "./Anime/Anime";
 import { ListContext } from "../List";
+import ListSettings from "./Settings/ListSettings";
+import stylesFromSearch from "./Search/Search.module.scss"
+import stylesFromSettings from "./Settings/ListSettings.module.scss";
 
 
 export const Context = createContext();
 
-function ListItem({ id, placeholder, color }) {
+function ListItem({ id, placeholder, defaultColor }) {
     const [searchState, setSeacthState] = useState(false)
+    const [settingsState, setSettingsState] = useState(false)
+    const [color, setColor] = useState("")
     const [animeList, setAnimeList] = useState([])
     const [rankValue, setRankValue] = useState("")
     const context = useContext(ListContext)
+    //автодобавление в хранилище при изменении списка
+    function testing() {
+        updateStorage(id, { animeList, rankValue, color });
+    }
+    useEffect(() => {
+        animeList.length && /* updateStorage(id, { animeList, rankValue, color }) */testing()
+    }, [animeList])
+    useEffect(() => {
+        rankValue.length && /* updateStorage(id, { animeList, rankValue, color }) */testing()
+
+    }, [rankValue])
+    useEffect(() => {
+        color != defaultColor && color != "" && testing()
+    }, [color])
     useEffect(() => {
         loadStorage(id);
     }, [])
-    //автодобавление в хранилище при изменении списка
-    useEffect(() => {
-        animeList.length && updateStorage(id, { animeList, rankValue })
-    }, [animeList])
-    useEffect(() => {
-        rankValue.length && updateStorage(id, { animeList, rankValue })
-
-    }, [rankValue])
     const updateStorage = (key, value) => {
         localStorage.setItem(key, JSON.stringify(value));
     }
@@ -31,14 +42,25 @@ function ListItem({ id, placeholder, color }) {
         data = JSON.parse(data)
         data && data.animeList && setAnimeList(data.animeList)
         data && data.rankValue && setRankValue(data.rankValue)
+        if (data && data.color) {
+            setColor(data.color)
+        }
+        else {
+            setColor(defaultColor)
+        }
     }
-    const onSearch = (event) => {
-        if (event.target.className == s.item__search) {
+    const onCloseSearch = (event) => {
+        if (event.target.className == s.item__search || event.target.className == stylesFromSearch.close) {
             searchState ?
-                event.target.style.backgroundImage = 'url("/img/Search/open.svg")'
+                event.currentTarget.style.backgroundImage = 'url("/img/Search/open.svg")'
                 :
-                event.target.style.backgroundImage = 'url("/img/Search/close.svg")'
+                event.currentTarget.style.backgroundImage = 'url("/img/Search/close.svg")'
             setSeacthState(!searchState);
+        }
+    }
+    const onCloseSettings = (event) => {
+        if (event.currentTarget.className == s.list__settings || event.target.className == stylesFromSettings.close) {
+            setSettingsState(!settingsState)
         }
     }
     //Наведение через обработчик потому что hover срабатывает на родительском элементе
@@ -63,19 +85,23 @@ function ListItem({ id, placeholder, color }) {
             setAnimeList([])
             localStorage.removeItem(id)
             keysArray = context.listCount.filter((elem) =>
-                elem !== id
+                elem != id
             )
+            console.log(keysArray);
             context.setListCount(keysArray.sort(context.compare))
         }
     }
     return (
         <Context.Provider value={{
             setAnimeList, animeList, animeListCompare,
-            updateStorage, id
+            updateStorage, id, onCloseSearch, onCloseSettings, color, rankValue, setColor
         }}>
             <section className={s.list__item}>
                 <div className={s.list__delete} onClick={deleteAnimeList}>
                     <img src="/img/ListItem/animeList-delete.svg" alt="delete" />
+                </div>
+                <div className={s.list__settings} onClick={onCloseSettings}>
+                    <img src="/img/ListItem/settings.svg" alt="settings" />
                 </div>
                 <input className={s.item__rank}
                     style={{ background: `${color}` }}
@@ -94,11 +120,12 @@ function ListItem({ id, placeholder, color }) {
                 </div>
                 <div
                     className={s.item__search}
-                    onClick={onSearch}
+                    onClick={onCloseSearch}
                     onMouseOver={onSearchOver}
                     onMouseOut={onSearchOut}
                 >
                     {searchState && <Search />}
+                    {settingsState && <ListSettings />}
                 </div>
             </section >
         </Context.Provider>

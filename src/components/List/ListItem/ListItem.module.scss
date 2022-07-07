@@ -3,7 +3,10 @@
     display: flex;
     min-height: 100px;
     input {outline:none;}
-    &:hover .list__delete{
+    &:hover .list__delete {
+        visibility:visible; 
+    }
+    &:hover .list__settings{
         visibility:visible; 
     }
 
@@ -56,4 +59,19 @@
         margin: -1px -1px 0px 0px;
         cursor: pointer;
     }
+}
+
+.list__settings{
+    visibility:hidden;  
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 25px;
+    height: 25px;
+    z-index: 1;
+    cursor: pointer;
+img{
+    width: 25px;
+    height: 25px;
+}
 }
