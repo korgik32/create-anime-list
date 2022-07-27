@@ -7,10 +7,9 @@ import ListSettings from "./Settings/ListSettings";
 import stylesFromSearch from "./Search/Search.module.scss"
 import stylesFromSettings from "./Settings/ListSettings.module.scss";
 
-
 export const Context = createContext();
 
-function ListItem({ id, placeholder, defaultColor }) {
+function ListItem({ id, placeholder, defaultColor, currentCard, setCurrentCard, fromListItem, setFromListItem, intoListItem, setIntoListItem }) {
     const [searchState, setSeacthState] = useState(false)
     const [settingsState, setSettingsState] = useState(false)
     const [color, setColor] = useState("")
@@ -74,6 +73,13 @@ function ListItem({ id, placeholder, defaultColor }) {
             event.target.style.backgroundSize = "30%";
         }
     }
+    const deleteAnime = (anime) => {
+        let data;
+        setAnimeList(data = animeList.filter(elem =>
+            elem.title !== anime.title
+        ))
+        updateStorage(id, { data, rankValue: rankValue, color: color })
+    }
     const animeListCompare = (anime) => {
         return animeList.find(elem =>
             anime.title === elem.title
@@ -87,21 +93,38 @@ function ListItem({ id, placeholder, defaultColor }) {
             keysArray = context.listCount.filter((elem) =>
                 elem != id
             )
-            console.log(keysArray);
             context.setListCount(keysArray.sort(context.compare))
         }
     }
+    const onDropHandler = (event) => {
+        event.preventDefault();
+        //если запихиваемая штука не является аниме карточкой то не надо
+        if (currentCard != "") {
+            setIntoListItem(id)
+            if (fromListItem == id) { }
+            else
+                if (animeListCompare(currentCard))
+                    alert("вы уже добавили это аниме");
+                else {
+                    setAnimeList((prev) => [...prev, currentCard]);
+                }
+        }
+    }
+
+
     return (
         <Context.Provider value={{
             setAnimeList, animeList, animeListCompare,
-            updateStorage, id, onCloseSearch, onCloseSettings, color, rankValue, setColor
+            updateStorage, id, onCloseSearch, onCloseSettings, color, rankValue, setColor,
+            currentCard, setCurrentCard, fromListItem, setFromListItem, deleteAnime,
+            intoListItem, setIntoListItem,
         }}>
             <section className={s.list__item}>
                 <div className={s.list__delete} onClick={deleteAnimeList}>
-                    <img src="/img/ListItem/animeList-delete.svg" alt="delete" />
+                    <img src="/img/List/ListItem/animeList-delete.svg" alt="delete" />
                 </div>
                 <div className={s.list__settings} onClick={onCloseSettings}>
-                    <img src="/img/ListItem/settings.svg" alt="settings" />
+                    <img src="/img/List/ListItem/settings.svg" alt="settings" />
                 </div>
                 <input className={s.item__rank}
                     style={{ background: `${color}` }}
@@ -109,13 +132,19 @@ function ListItem({ id, placeholder, defaultColor }) {
                     onChange={(event) => { setRankValue(event.target.value) }}
                     placeholder={placeholder}>
                 </input>
-                <div className={s.item__field}>
+                <div
+                    className={s.item__field}
+                    draggable={false}
+                    onDrop={onDropHandler}
+                    onDragOver={(event) => { event.preventDefault() }}
+                >
                     {animeList?.map((elem, index) =>
                         <Anime
                             key={index}
                             poster={elem.poster}
                             self={elem}
                         />
+
                     )}
                 </div>
                 <div

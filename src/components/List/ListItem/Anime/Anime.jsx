@@ -1,40 +1,102 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useRef } from "react";
+import { createElement } from "react";
+import { useState } from "react";
+import { ListContext } from "../../List";
 import { Context } from "../ListItem";
 import s from "./Anime.module.scss"
 
 function Anime({ poster, self }) {
     const context = useContext(Context);
+    const contextFromList = useContext(ListContext)
+    const animeRef = useRef(null);
+    const documentRef = useRef(document)
+    /* let shiftX, shiftY; */
+    const [shiftX, setShiftX] = useState(null)
+    const [shiftY, setShiftY] = useState(null)
     //при клипе на любое другое место кроме текущего аниме убирает кнопку удаления
     const handler = (event) => {
-        let AnimeElement = event.currentTarget.current;
+        let AnimeElement = document.current;
+        console.log(documentRef.current.current);
         AnimeElement.previousSibling.style.height = "0%";
         AnimeElement.previousSibling.style.width = "0%";
-        AnimeElement = null;
-        event.currentTarget.removeEventListener("click", handler, true)
-
+        documentRef.current.current = null;
+        document.removeEventListener("click", handler, true)
     }
+
     const onAnime = (event) => {
         const target = event.currentTarget.firstChild;
         target.style.height = "30%";
         target.style.width = "45%";
-        const clickWatcher = document;
-        clickWatcher.addEventListener("click", handler, true)
-        clickWatcher.current = event.target;
+        document.addEventListener("click", handler, true)
+        document.
+            current = event.target;
     }
     const onDelete = () => {
-        let data;
+        /* let data;
         context.setAnimeList(data = context.animeList.filter(elem =>
             elem.title !== self.title
         ))
-        const color = context.color, rankValue = context.rankValue;
-        context.updateStorage(context.id, { data, rankValue, color })
+        context.updateStorage(context.id, { data, rankValue: context.rankValue, color: context.color }) */
+
+        context.deleteAnime(self);
+        document.removeEventListener("click", handler, true)
+
+    }
+
+    const dragStartHandler = (event) => {
+        context.setCurrentCard(self);
+        context.setFromListItem(context.id);
+        /*         setShiftX(event.clientX - animeRef.current.getBoundingClientRect().left)
+                setShiftY(event.clientY - animeRef.current.getBoundingClientRect().top)
+                const width = animeRef.current.offsetWidth + "px";
+                const height = animeRef.current.offsetHeight + "px";
+                const elem = createElement("div");
+                document.body.append(elem);
+                elem.style.width = width;
+                elem.style.height = height;
+                elem.style.backgroundColor = "#456";
+                console.log(elem);
+                animeRef.current.style.height = width; */
+
+    }
+
+    const dradEndHandler = (event) => {
+        if (context.intoListItem != context.id)
+            context.deleteAnime(context.currentCard)
+        setTimeout(() => { context.setCurrentCard("") }, 0)
+    }
+    const dradOverHandler = (event) => {
+        event.preventDefault();
+        /*         let thisShiftX = event.clientX - animeRef.current.getBoundingClientRect().left;
+                let thisShiftY = event.clientY - animeRef.current.getBoundingClientRect().top;
+                animeRef.current.style.left = thisShiftX - shiftX + 'px';
+                animeRef.current.style.top = thisShiftY - shiftY + 'px';
+                console.log(thisShiftX, "-thisShiftX", shiftX, "- shiftX");
+                console.log(event.clientX, "-event.clientX", event.clientY, "- event.clientY");
+                console.log(animeRef.current.getBoundingClientRect().left, "-animeRef.current.getBoundingClientRect().left",
+                    animeRef.current.getBoundingClientRect().top, "-animeRef.current.getBoundingClientRect().top"); */
+    }
+
+    const dropHandler = (event) => {
+        event.preventDefault();
+
     }
 
     return (
-        <section onClick={onAnime} className={s.anime}>
-            <img onClick={onDelete} className={s.anime__close} src={"/img/ListItem/animeDelete.svg"} alt="delete"></img>
+        <div
+            onClick={onAnime}
+            className={s.anime}
+            ref={animeRef}
+            draggable
+            onDragStart={dragStartHandler}
+            /*             onDragLeave={dradEndHandler} */
+            onDragEnd={dradEndHandler}
+            onDragOver={dradOverHandler}
+            onDrop={dropHandler}
+        >
+            <img onClick={onDelete} className={s.anime__close} src={"/img/List/ListItem/animeDelete.svg"} alt="delete"></img>
             <img className={s.anime__poster} src={poster} alt="image" />
-        </section>
+        </div>
     )
 }
 
