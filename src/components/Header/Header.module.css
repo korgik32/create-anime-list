@@ -1,0 +1,29 @@
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 100px;
+  background: #d1f1fd;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+
+.header__title {
+  margin-right: 40%;
+  font-family: 'Courgette', cursive;
+  font-size: 30px;
+  color: #2e6d6d;
+}
+
+.header__image {
+  width: 50px;
+  height: 50px;
+  background: #aa6363;
+}

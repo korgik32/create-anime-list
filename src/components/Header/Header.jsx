@@ -1,13 +1,34 @@
 import React from "react";
-import s from "./Header.module.scss"
+import s from "./Header.module.scss";
+import { Link } from "react-router-dom";
 
 function Header() {
-
-    return (
-        <header className={s.header}>
-            <div className={s.header__title}>Create Your Anime List</div>
-            <div className={s.header__image}></div>
-        </header>
-    )
+  return (
+    <header className={s.header}>
+      <div className={s.header__title}>
+        <Link to={"/"}>
+          Create Your Anime List
+        </Link>
+      </div>
+      <nav className={s.header__nav}>
+        <ul>
+          <li>
+            <Link
+              className={s.link}
+              to={"/"}>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link
+              className={s.link}
+              to={"/instruction"}>
+              Instruction
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
 }
 export default Header;

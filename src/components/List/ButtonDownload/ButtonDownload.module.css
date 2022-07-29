@@ -1,0 +1,27 @@
+.button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: 'Oswald', sans-serif;
+  width: 120px;
+  height: 50px;
+  border-radius: 12px;
+  background-color: #52e493;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #ccfaeb;
+  cursor: pointer;
+  margin: 0px 5px 0px 5px;
+}
+
+.button:hover {
+  background-color: #ddf7dc;
+  border: 1px solid #52e493;
+  color: #52e493;
+}
+
+.button_title {
+  margin: auto;
+}

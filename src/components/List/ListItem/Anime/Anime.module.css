@@ -1,0 +1,31 @@
+.anime {
+  position: relative;
+  /* position: absolute; */
+  z-index: 1;
+  cursor: -webkit-grab;
+  cursor: grab;
+  /*     width: 100px;
+    height:100px; */
+  color: #addbf0;
+}
+
+.anime .anime__poster {
+  position: relative;
+  display: block;
+  z-index: 0;
+  width: 100%;
+  max-height: 100px;
+}
+
+.anime__close {
+  display: block;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  height: 0%;
+  width: 0%;
+  -webkit-transition: 0.1s ease-in-out;
+  transition: 0.1s ease-in-out;
+}

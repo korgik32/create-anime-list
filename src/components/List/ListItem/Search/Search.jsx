@@ -135,7 +135,7 @@ function Search() {
         <div
           className={s.result__image}>
           <div>
-            <p>cowboy</p>
+            <p>cowboy bebop</p>
             <img
               src='https://i.pinimg.com/736x/d6/7c/af/d67cafc9096ce9afea6c9fd00b5bb093.jpg'
               alt='anime image'

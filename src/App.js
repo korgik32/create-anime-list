@@ -3,10 +3,8 @@ import './App.css';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import List from './components/List/List';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import Instruction from './components/Instruction/Instruction';
-
+import {Routes,Route} from "react-router-dom"
 
 
 function App() {
@@ -17,8 +15,11 @@ function App() {
 
       <div className='wrapper'>
         <Header />
-        {/* <Instruction /> */}
-        <List />
+        <Routes>
+          <Route path='/' element={<List />}/>
+          <Route path='/instruction' element={<Instruction />}/>
+          <Route path='*' element={<center>Not found</center>}/>
+        </Routes>
         <Footer />
       </div>
     </div>

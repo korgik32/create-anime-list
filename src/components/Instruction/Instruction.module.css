@@ -1,0 +1,7 @@
+.instruction {
+  background: rgba(241, 250, 255, 0.932);
+  padding: 45px 0px 45px 0px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 18px;
+  border-radius: 10px;
+}

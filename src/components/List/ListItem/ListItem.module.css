@@ -1,0 +1,109 @@
+.list__item {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 100px;
+}
+
+.list__item input {
+  outline: none;
+}
+
+.list__item:hover .list__delete {
+  visibility: visible;
+}
+
+.list__item:hover .list__settings {
+  visibility: visible;
+}
+
+.item__rank {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 10%;
+          flex: 0 1 10%;
+  background: #f9fcff;
+  font-size: 30px;
+  border: 1px solid black;
+  border-right: 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+::-webkit-input-placeholder {
+  color: #000;
+}
+
+:-ms-input-placeholder {
+  color: #000;
+}
+
+::-ms-input-placeholder {
+  color: #000;
+}
+
+::placeholder {
+  color: #000;
+}
+
+.item__field {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 80%;
+          flex: 0 1 80%;
+  background: #f9fcff;
+  border: 1px solid black;
+  max-height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.item__search {
+  position: relative;
+  background: #f9fcff;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 10%;
+          flex: 0 1 10%;
+  /* background-color: rgb(199, 145, 145); */
+  border: 1px inset black;
+  border-left: 0px;
+  background-image: url(/../public/img/Search/open.svg);
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: center;
+}
+
+.list__delete {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  /*     background: rgb(212, 92, 92); */
+  z-index: 1;
+}
+
+.list__delete img {
+  margin: -1px -1px 0px 0px;
+  cursor: pointer;
+}
+
+.list__settings {
+  visibility: hidden;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.list__settings img {
+  width: 25px;
+  height: 25px;
+}
