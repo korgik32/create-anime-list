@@ -27,6 +27,7 @@ table{border-collapse:collapse;border-spacing:0}
 }
 
 body{
-  padding: 0px 0px 10px 0px;
+  padding: 0px 5px 10px 5px;
   background: rgba(0, 0, 0, 0.089);
+  min-width: 750px;
 }

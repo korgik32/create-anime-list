@@ -3,6 +3,7 @@ import s from "./Instruction.module.scss";
 import InstructionItem from "./InstructionItem/InstructionItem";
 
 function Instruction() {
+  const searchText = `Search supports any language. After the search result, add or clear.`;
   const dndText = `You can drag an element to another tier.`;
   const addText = `To add an item, click the Add button.`;
   const changeRankText = `You can change the name of the rank by clicking on it and typing a new one.`;
@@ -12,6 +13,10 @@ function Instruction() {
    click on the button that appears.`;
   return (
     <div className={s.instruction}>
+      <InstructionItem
+        text={searchText}
+        screenshot='/img/Instruction/searchInstr.png'
+      />
       <InstructionItem
         text={deleteAnimeText}
         screenshot='/img/Instruction/deleteAnime.png'

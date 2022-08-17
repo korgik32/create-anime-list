@@ -3,7 +3,7 @@ import s from "./ButtonDownload.module.scss"
 
 function ButtonDownload() {
     const onButtonDownload = () => {
-
+        alert("coming soon ")
     }
     return (
         <div onClick={onButtonDownload} className={s.button}>

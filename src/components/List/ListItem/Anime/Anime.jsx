@@ -16,27 +16,14 @@ function Anime({ poster, self }) {
   );
   const animeRef = useRef(null);
   const documentRef = useRef(document);
-  /* let shiftX, shiftY; */
-  const [shiftX, setShiftX] =
-    useState(null);
-  const [shiftY, setShiftY] =
-    useState(null);
   //при клипе на любое другое место кроме текущего аниме убирает кнопку удаления
   const handler = (event) => {
     let AnimeElement = document.current;
-    console.log(
-      documentRef.current.current
-    );
-    AnimeElement.previousSibling.style.height =
-      "0%";
-    AnimeElement.previousSibling.style.width =
-      "0%";
+    console.log(documentRef.current.current);
+    AnimeElement.previousSibling.style.height = "0%";
+    AnimeElement.previousSibling.style.width = "0%";
     documentRef.current.current = null;
-    document.removeEventListener(
-      "click",
-      handler,
-      true
-    );
+    document.removeEventListener("click", handler, true);
   };
 
   const onAnime = (event) => {
@@ -44,10 +31,7 @@ function Anime({ poster, self }) {
       event.currentTarget.firstChild;
     target.style.height = "30%";
     target.style.width = "45%";
-    document.addEventListener(
-      "click",
-      handler,
-      true
+    document.addEventListener("click", handler, true
     );
     document.current = event.target;
   };
@@ -103,9 +87,7 @@ function Anime({ poster, self }) {
       <img
         onClick={onDelete}
         className={s.anime__close}
-        src={
-          "/img/List/ListItem/animeDelete.svg"
-        }
+        src={"/img/List/ListItem/animeDelete.svg"}
         alt='delete'></img>
       <img
         className={s.anime__poster}

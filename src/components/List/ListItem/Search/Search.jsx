@@ -4,44 +4,33 @@ import React, {
 import { useState } from "react";
 import { Context } from "../ListItem";
 import s from "./Search.module.scss";
+import MyLoader from "./MyLoader/MyLoader";
 
 function Search() {
-  const [] = useState("");
-  const [searchValue, setSearchValue] =
-    useState("");
-  const [translated, setTrandlated] =
-    useState("");
+  const [noData, setNoData] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
+  const [image, setImage] = useState('https://i.pinimg.com/736x/d6/7c/af/d67cafc9096ce9afea6c9fd00b5bb093.jpg');
+  const [title, setTitle] = useState("cowboy bebop");
+  const [loading, setLoading] = useState(false);
   const context = useContext(Context);
+  let translated = null;
   const addAnime = (anime) => {
     if (context.animeListCompare(anime))
-      alert(
-        "Вы уже добавили это аниме"
-      );
+      alert("You already added this anime");
     else
-      context.setAnimeList((prev) => [
-        ...prev,
-        anime,
-      ]);
+      context.setAnimeList((prev) => [...prev, anime]);
   };
-  const parse = () => {
+  /* const parse = () => {
     let temp = translated;
     temp = temp.replace(/ /g, "-");
-    //если пробел не один
-    setTrandlated(temp);
-    /*     console.log(temp); */
-  };
+  }; */
   const onEnter = async (event) => {
     if (searchValue != "") {
-      const encodedParams =
-        new URLSearchParams();
-      encodedParams.append(
-        "q",
-        searchValue
-      );
-      encodedParams.append(
-        "target",
-        "en"
-      );
+      setLoading(true);
+      let error = "noError";
+      const encodedParams = new URLSearchParams();
+      encodedParams.append("q", searchValue);
+      encodedParams.append("target", "en");
       const options = {
         method: "POST",
         headers: {
@@ -56,26 +45,41 @@ function Search() {
         },
         body: encodedParams,
       };
-      await fetch(
-        "https://google-translate1.p.rapidapi.com/language/translate/v2",
-        options
-      )
+      await fetch("https://google-translate1.p.rapidapi.com/language/translate/v2", options)
+        .then((response) => response.json())
         .then((response) =>
-          response.json()
+          translated = response.data.translations[0].translatedText
         )
-        .then((response) =>
-          setTrandlated(
-            response.data
-              .translations[0]
-              .translatedText
-          )
-        )
-        .catch((err) =>
-          console.error(err)
+        .catch((err) => {
+          alert("search error")
+          error = "error";
+        }
         );
-      parse();
+      /* parse(); */
+      animeRequest();
     }
   };
+  const onClear = (event) => {
+    setSearchValue("");
+    setNoData(true);
+  }
+
+  const animeRequest = async () => {
+    await fetch(`https://kitsu.io/api/edge/anime?filter[text]=${translated}`, {
+      headers: {
+        'Accept': 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json'
+      }
+    }
+    )
+      .then(response => response.json())
+      .then(result => {
+        setTitle(result.data[0].attributes.titles.en);
+        setImage(result.data[0].attributes.posterImage.large);
+      })
+    setNoData(false);
+    setLoading(false)
+  }
 
   return (
     <section className={s.search}>
@@ -83,8 +87,7 @@ function Search() {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent:
-            "space-around",
+          justifyContent: "space-around",
         }}>
         <div
           className={s.search__string}
@@ -96,9 +99,7 @@ function Search() {
           <input
             value={searchValue}
             onChange={(event) => {
-              setSearchValue(
-                event.target.value
-              );
+              setSearchValue(event.target.value);
             }}
             placeholder='search...'
             onKeyDown={(event) => {
@@ -111,16 +112,13 @@ function Search() {
             style={{
               margin: "0px 5px 0px 0px",
               borderRadius: "3px",
-              padding:
-                "3px 10px 3px 10px",
+              padding: "3px 10px 3px 10px",
             }}
             onMouseOver={(event) =>
-              (event.target.style.backgroundColor =
-                "#addbf0")
+              (event.target.style.backgroundColor = "#addbf0")
             }
             onMouseOut={(event) =>
-              (event.target.style.backgroundColor =
-                "transparent")
+              (event.target.style.backgroundColor = "transparent")
             }
             onClick={onEnter}
           />
@@ -135,48 +133,61 @@ function Search() {
         <div
           className={s.result__image}>
           <div>
-            <p>cowboy bebop</p>
-            <img
-              src='https://i.pinimg.com/736x/d6/7c/af/d67cafc9096ce9afea6c9fd00b5bb093.jpg'
-              alt='anime image'
-            />
+            {!noData ?
+              <>
+                <p>{title}</p>
+                <img
+                  src={image}
+                  alt='anime image'
+                />
+              </>
+              :
+              loading
+                ?
+                <MyLoader style={{ marginTop: "50%" }} />
+                :
+                <p style={{ marginTop: "50%" }}>Find something...</p>
+            }
+
           </div>
         </div>
-        <div className={s.ok}>
-          <img
-            src='/img/Search/ok.svg'
-            alt='ok'
-            onClick={() => {
-              addAnime({
-                title: "cowboy",
-                poster:
-                  "https://i.pinimg.com/736x/d6/7c/af/d67cafc9096ce9afea6c9fd00b5bb093.jpg",
-              });
-            }}
-            onMouseOver={(event) => {
-              event.target.src =
-                "/img/Search/ok-hover.svg";
-            }}
-            onMouseOut={(event) => {
-              event.target.src =
-                "/img/Search/ok.svg";
-            }}
-          />
-        </div>
-        <div className={s.no}>
-          <img
-            src='/img/Search/no.svg'
-            alt='no'
-            onMouseOver={(event) => {
-              event.target.src =
-                "/img/Search/no-hover.svg";
-            }}
-            onMouseOut={(event) => {
-              event.target.src =
-                "/img/Search/no.svg";
-            }}
-          />
-        </div>
+        {!noData
+          &&
+          <>
+            <div className={s.ok}>
+              <img
+                src='/img/Search/ok.svg'
+                alt='ok'
+                onClick={() => {
+                  addAnime({
+                    title: title,
+                    poster: image,
+                  });
+                }}
+                onMouseOver={(event) => {
+                  event.target.src =
+                    "/img/Search/ok-hover.svg";
+                }}
+                onMouseOut={(event) => {
+                  event.target.src = "/img/Search/ok.svg";
+                }}
+              />
+            </div>
+            <div className={s.no}>
+              <img
+                src='/img/Search/no.svg'
+                alt='no'
+                onClick={onClear}
+                onMouseOver={(event) => {
+                  event.target.src = "/img/Search/no-hover.svg";
+                }}
+                onMouseOut={(event) => {
+                  event.target.src = "/img/Search/no.svg";
+                }}
+              />
+            </div>
+          </>
+        }
       </div>
     </section>
   );
