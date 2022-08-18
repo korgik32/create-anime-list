@@ -42,7 +42,7 @@ function Search() {
         },
         body: encodedParams,
       };
-      await fetch("1https://google-translate1.p.rapidapi.com/language/translate/v2", options)
+      await fetch("https://google-translate1.p.rapidapi.com/language/translate/v2", options)
         .then((response) => response.json())
         .then((response) =>
           animeRequest(response.data.translations[0].translatedText)
