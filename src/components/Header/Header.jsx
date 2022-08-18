@@ -9,6 +9,7 @@ function Header() {
         <Link to={"/"}>
           Create Your Anime List
         </Link>
+        <img src="/img/Header/glare.svg" alt="glare" />
       </div>
       <nav className={s.header__nav}>
         <ul>

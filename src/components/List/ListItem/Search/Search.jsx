@@ -1,6 +1,4 @@
-import React, {
-  useContext,
-} from "react";
+import React, { useContext, } from "react";
 import { useState } from "react";
 import { Context } from "../ListItem";
 import s from "./Search.module.scss";
@@ -9,11 +7,10 @@ import MyLoader from "./MyLoader/MyLoader";
 function Search() {
   const [noData, setNoData] = useState(true);
   const [searchValue, setSearchValue] = useState("");
-  const [image, setImage] = useState('https://i.pinimg.com/736x/d6/7c/af/d67cafc9096ce9afea6c9fd00b5bb093.jpg');
-  const [title, setTitle] = useState("cowboy bebop");
+  const [image, setImage] = useState('');
+  const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const context = useContext(Context);
-  let translated = null;
   const addAnime = (anime) => {
     if (context.animeListCompare(anime))
       alert("You already added this anime");
@@ -26,8 +23,8 @@ function Search() {
   }; */
   const onEnter = async (event) => {
     if (searchValue != "") {
+      setNoData(true)
       setLoading(true);
-      let error = "noError";
       const encodedParams = new URLSearchParams();
       encodedParams.append("q", searchValue);
       encodedParams.append("target", "en");
@@ -45,18 +42,18 @@ function Search() {
         },
         body: encodedParams,
       };
-      await fetch("https://google-translate1.p.rapidapi.com/language/translate/v2", options)
+      await fetch("1https://google-translate1.p.rapidapi.com/language/translate/v2", options)
         .then((response) => response.json())
         .then((response) =>
-          translated = response.data.translations[0].translatedText
+          animeRequest(response.data.translations[0].translatedText)
         )
         .catch((err) => {
+          animeRequest(searchValue);
+        })
+        .catch((err) => {
           alert("search error")
-          error = "error";
-        }
-        );
-      /* parse(); */
-      animeRequest();
+        })
+
     }
   };
   const onClear = (event) => {
@@ -64,8 +61,8 @@ function Search() {
     setNoData(true);
   }
 
-  const animeRequest = async () => {
-    await fetch(`https://kitsu.io/api/edge/anime?filter[text]=${translated}`, {
+  const animeRequest = async (words) => {
+    await fetch(`https://kitsu.io/api/edge/anime?filter[text]=${words}`, {
       headers: {
         'Accept': 'application/vnd.api+json',
         'Content-Type': 'application/vnd.api+json'
@@ -74,10 +71,14 @@ function Search() {
     )
       .then(response => response.json())
       .then(result => {
-        setTitle(result.data[0].attributes.titles.en);
+        setTitle(result.data[0].attributes.titles[Object.keys(result.data[0].attributes.titles)[0]]);//первое свойство в обьекте titles
         setImage(result.data[0].attributes.posterImage.large);
+        setNoData(false)
       })
-    setNoData(false);
+      .catch(err => {
+        alert("anime search error")
+        setNoData(true);
+      })
     setLoading(false)
   }
 

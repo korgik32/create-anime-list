@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  createContext,
-  useContext,
-} from "react";
+import React, { useEffect, useState, createContext, useContext, } from "react";
 import Search from "./Search/Search";
 import s from "./ListItem.module.scss";
 import Anime from "./Anime/Anime";
@@ -25,23 +20,14 @@ function ListItem({
   intoListItem,
   setIntoListItem,
 }) {
-  const [searchState, setSeacthState] =
-    useState(false);
-  const [
-    settingsState,
-    setSettingsState,
-  ] = useState(false);
-  const [color, setColor] =
-    useState("");
-  const [animeList, setAnimeList] =
-    useState([]);
-  const [rankValue, setRankValue] =
-    useState("");
-  const context = useContext(
-    ListContext
-  );
+  const [searchState, setSeacthState] = useState(false);
+  const [settingsState, setSettingsState,] = useState(false);
+  const [color, setColor] = useState("");
+  const [animeList, setAnimeList] = useState([]);
+  const [rankValue, setRankValue] = useState("");
+  const context = useContext(ListContext);
   //автодобавление в хранилище при изменении списка
-  function testing() {
+  function update() {
     updateStorage(id, {
       animeList,
       rankValue,
@@ -49,17 +35,15 @@ function ListItem({
     });
   }
   useEffect(() => {
-    animeList.length &&
-      /* updateStorage(id, { animeList, rankValue, color }) */ testing();
+    animeList.length && update();
   }, [animeList]);
   useEffect(() => {
-    rankValue.length &&
-      /* updateStorage(id, { animeList, rankValue, color }) */ testing();
+    rankValue.length && update();
   }, [rankValue]);
   useEffect(() => {
     color != defaultColor &&
       color != "" &&
-      testing();
+      update();
   }, [color]);
   useEffect(() => {
     loadStorage(id);
@@ -91,25 +75,20 @@ function ListItem({
   };
   const onCloseSearch = (event) => {
     if (
-      event.target.className ==
-        s.item__search ||
-      event.target.className ==
-        stylesFromSearch.close
+      event.target.className == s.item__search ||
+      event.target.className == stylesFromSearch.close
     ) {
       searchState
         ? (event.currentTarget.style.backgroundImage =
-            'url("/img/Search/open.svg")')
+          'url("/img/Search/open.svg")')
         : (event.currentTarget.style.backgroundImage =
-            'url("/img/Search/close.svg")');
+          'url("/img/Search/close.svg")');
       setSeacthState(!searchState);
     }
   };
   const onCloseSettings = (event) => {
     if (
-      event.currentTarget.className ==
-        s.list__settings ||
-      event.target.className ==
-        stylesFromSettings.close
+      event.currentTarget.className == s.list__settings || event.target.className == stylesFromSettings.close
     ) {
       setSettingsState(!settingsState);
     }
@@ -117,20 +96,16 @@ function ListItem({
   //Наведение через обработчик потому что hover срабатывает на родительском элементе
   const onSearchOver = (event) => {
     if (
-      event.target.className ==
-      s.item__search
+      event.target.className == s.item__search
     ) {
-      event.target.style.backgroundSize =
-        "32%";
+      event.target.style.backgroundSize = "32%";
     }
   };
   const onSearchOut = (event) => {
     if (
-      event.target.className ==
-      s.item__search
+      event.target.className == s.item__search
     ) {
-      event.target.style.backgroundSize =
-        "30%";
+      event.target.style.backgroundSize = "30%";
     }
   };
   const deleteAnime = (anime) => {
@@ -182,10 +157,7 @@ function ListItem({
           "You already added this anime"
         );
       else {
-        setAnimeList((prev) => [
-          ...prev,
-          currentCard,
-        ]);
+        setAnimeList((prev) => [...prev, currentCard,]);
       }
     }
   };
@@ -250,9 +222,9 @@ function ListItem({
             event.preventDefault();
           }}>
           {animeList?.map(
-            (elem, index) => (
+            (elem) => (
               <Anime
-                key={index}
+                key={elem.title}
                 poster={elem.poster}
                 self={elem}
               />
