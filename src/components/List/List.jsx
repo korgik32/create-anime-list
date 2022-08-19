@@ -26,18 +26,18 @@ function List() {
   };
   const loadStorage = () => {
     let keysArray = [];
-    for (
-      let index = 0;
-      index < localStorage.length;
-      index++
-    ) {
-      const key =
-        localStorage.key(index);
-      keysArray.push(key);
+    if (localStorage.length > 0) {
+      for (let index = 0; index < localStorage.length; index++) {
+        const key = localStorage.key(index);
+        keysArray.push(key);
+        setListCount(keysArray.sort(compare));
+      }
+    } else {
+      for (let index = 0; index < 3; index++) {
+        localStorage.setItem(index, null);
+      }
     }
-    setListCount(
-      keysArray.sort(compare)
-    );
+
   };
   useEffect(() => {
     loadStorage();
@@ -96,14 +96,8 @@ function List() {
           )}
         </div>
         <div className={s.buttons}>
-          <ButtonAdd
-            className={s.button__add}
-          />
-          <ButtonDownload
-            className={
-              s.button__download
-            }
-          />
+          <ButtonAdd className={s.button__add} />
+          <ButtonDownload className={s.button__download} />
         </div>
       </main>
     </ListContext.Provider>
