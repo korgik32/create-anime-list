@@ -29,18 +29,14 @@ function Search() {
       encodedParams.append("q", searchValue);
       encodedParams.append("target", "en");
       const options = {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "content-type":
-            "application/x-www-form-urlencoded",
-          "Accept-Encoding":
-            "application/gzip",
-          "X-RapidAPI-Key":
-            "478227f6d5msh66283d014e61af5p14fa8cjsnc43cb5780a47",
-          "X-RapidAPI-Host":
-            "google-translate1.p.rapidapi.com",
+          'content-type': 'application/x-www-form-urlencoded',
+          'Accept-Encoding': 'application/gzip',
+          'X-RapidAPI-Key': '71d32b2b4bmsh78e0c7bd36e4d58p17a16cjsnf5e20808c4f2',
+          'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
         },
-        body: encodedParams,
+        body: encodedParams
       };
       await fetch("https://google-translate1.p.rapidapi.com/language/translate/v2", options)
         .then((response) => response.json())
@@ -51,7 +47,7 @@ function Search() {
           animeRequest(searchValue);
         })
         .catch((err) => {
-          alert("search error")
+          alert("Translate error.Perhaps the translator is broken, try entering a request in English")
         })
 
     }
